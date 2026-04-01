@@ -234,7 +234,7 @@ For this lab we'll continue using the VM created previously as connections using
     journalctl -u sshd
     ```
 
-3.   Another way to check on current listening port is filtering the configuration file and check directly in the port.   If the Port line starts with # symbol that means the VM is using default port to listen, which is 22.
+3.  Another way to check on current listening port is filtering the configuration file and check directly in the port.   If the Port line starts with # symbol that means the VM is using default port to listen, which is 22.
 
     ```bash
     grep -i port /etc/ssh/sshd_config

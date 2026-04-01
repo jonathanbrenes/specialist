@@ -26,15 +26,16 @@ All lab environments are deployed using the buttons below. Each button deploys a
 
 **Lab 1 — RHEL 9 VM (corrupt initrd/initramfs):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxprod.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/Lab01.json)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FLab01.json)
+
 
 **Lab 2 — RHEL 9 VM (missing hv_storvsc driver in initrd):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxprod.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/Lab02.json)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FLab02.json)
 
 **Lab 3 — RHEL 9 VM (missing all LIS drivers in initrd):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxprod.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/Lab03.json)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FLab03.json)
 
 ---
 
@@ -106,7 +107,7 @@ All VMs are deployed with:
     Deployment: See the Deployment section.
 
 2. Check on the VM Serial Console log and Boot Diagnostics screenshot and Serial log to confirm the no-boot status.  VM is in a non-boot scenario due to corrupt initramfs/initrd for current kernel. You'll find a screen with a kernel panic, example:
-    ![initramfs file_corrupted](https://dev.azure.com/LinuxNinjas/aa969835-d5b5-4c66-a74c-74d1f9d57eed/_apis/git/repositories/16b54735-533f-46a2-a894-32099518c4eb/items?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/images/initramfs-lab1-error.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0)
+    ![initramfs file_corrupted](https://raw.githubusercontent.com/jonathanbrenes/specialist/refs/heads/specialist2026/vm-recover_and_initrd/Labs/images/initramfs-lab1-error.png)
 
 3. Create a Repair VM and attach an OS disk copy of damage VM as data disk.
 4. Create and connect to a chroot environment following the public documentation: [Chroot environment in a Linux rescue VM](https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/chroot-environment-linux)
@@ -134,7 +135,7 @@ Once you've added the missing driver into the Initrd configuration file, make th
 
 #### Symptom
 
-![initramfs driver_missing](https://dev.azure.com/LinuxNinjas/aa969835-d5b5-4c66-a74c-74d1f9d57eed/_apis/git/repositories/16b54735-533f-46a2-a894-32099518c4eb/items?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/images/initramfs-lab2-error.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0)
+![initramfs driver_missing](https://raw.githubusercontent.com/jonathanbrenes/specialist/refs/heads/specialist2026/vm-recover_and_initrd/Labs/images/initramfs-lab2-error.png)
 
 #### Instructions
 
@@ -162,7 +163,7 @@ Once you've added the missing driver into the Initrd configuration file, make th
 
 #### Symptom
 
-![initramfs driver_missing](https://dev.azure.com/LinuxNinjas/aa969835-d5b5-4c66-a74c-74d1f9d57eed/_apis/git/repositories/16b54735-533f-46a2-a894-32099518c4eb/items?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/images/initramfs-lab3-error.png&versionDescriptor%5BversionOptions%5D=0&versionDescriptor%5BversionType%5D=0&versionDescriptor%5Bversion%5D=master&resolveLfs=true&%24format=octetStream&api-version=5.0)
+![initramfs driver_missing](https://raw.githubusercontent.com/jonathanbrenes/specialist/refs/heads/specialist2026/vm-recover_and_initrd/Labs/images/initramfs-lab3-error.png)
 
 #### Instructions
 

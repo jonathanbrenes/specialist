@@ -25,17 +25,17 @@ All lab environments are deployed using the buttons below. Each button deploys a
 
 **Lab 1 — Ubuntu 24.04 LTS VM (SSH configuration issue):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxbeta.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/VMRecoverLab1.json&version=GBjbrenes-specialistreview2026)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FVMRecoverLab1.json)
 
 **Lab 2** uses the same VM deployed in Lab 1. No additional deployment is required.
 
 **Lab 3 — SLES 15 SP6 VM (non-boot fstab scenario):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxprod.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/VMREcoverLab3.json)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FVMRecoverLab3.json)
 
 **Lab 4 — RHEL 9 VM (non-boot initrd scenario):**
 
-[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://labboxprod.azurewebsites.net/api/labbox?url=https://dev.azure.com/LinuxNinjas/Azure%20Linux%20Academy%20-%20CSS/_git/AzureLinuxAcademy?path=/Azure%20Linux%20Academy/Azure_Linux_Specialist_Self_Paced/vm-recover_and_initrd/Labs/VMREcoverLab4.json)
+[![Click to deploy](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjonathanbrenes%2Fspecialist%2Frefs%2Fheads%2Fspecialist2026%2Fvm-recover_and_initrd%2FLabs%2FVMRecoverLab4.json)
 
 ---
 

@@ -111,10 +111,12 @@ All VMs are deployed with:
 
 3. Create a Repair VM and attach an OS disk copy of damage VM as data disk.
 4. Create and connect to a chroot environment following the public documentation: [Chroot environment in a Linux rescue VM](https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/chroot-environment-linux)
-5. Take a backup of current iniramfs/initrd file using command **cp**
+5. Take a backup of current initramfs/initrd file using command **cp**
 6. Rebuild initramfs, remember to keep the appropiate path while executing this command:
 
-   `# dracut -f -v initramfs-<kernel=version>.img <kernel-version>`
+   ```bash
+   dracut -f -v initramfs-<kernel-version>.img <kernel-version>
+   ```
 
 7. Exit chroot environmet and umount OS disk copy, then proceed to swap the OS disk in the failing VM.
 8. Start the VM and verify the VM is booting as expected.
@@ -149,9 +151,11 @@ Once you've added the missing driver into the Initrd configuration file, make th
 5. Create a backup of the problematic initramfs using command *cp*
 6. Modify configuration file and comment out the line that says "omit_drivers+=" hv_storvsc " and add the add_drivers line like below.  Then, proceed to rebuild the initrd file for the current kernel using the command below (*Remember to include the correct path on the command*):
 
-          #vi /etc/dracut.conf
-          add_drivers+=" hv_storvsc "
-          #dracut -f -v <initramfsversion> <kernelversion>
+   ```bash
+   vi /etc/dracut.conf
+   add_drivers+=" hv_storvsc "
+   dracut -f -v <initramfsversion> <kernelversion>
+   ```
 
 7. Exit chroot and unmount the OS disk copy from the troubleshooting VM, after you've done that, reassemble the original VM by switching the OS disk.
 
@@ -176,9 +180,11 @@ Once you've added the missing driver into the Initrd configuration file, make th
 4. Create and connect to a chroot environment following the public documentation: [Chroot environment in a Linux rescue VM](https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/chroot-environment-linux)
 5. Modify configuration file and delete or comment out the line that says "omit_drivers+=" hv_vmbus hv_netvsc hv_storvsc " and add the line add_drivers as explained below.  Then, proceed to rebuild the initrd file for the current kernel using the command below (*Remember to include the correct path on the command*):
 
-          #vi /etc/dracut.conf
-          add_drivers+=" hv_vmbus hv_netvsc hv_storvsc "
-          #dracut -f -v <initramfsversion> <kernelversion>
+   ```bash
+   vi /etc/dracut.conf
+   add_drivers+=" hv_vmbus hv_netvsc hv_storvsc "
+   dracut -f -v <initramfsversion> <kernelversion>
+   ```
 
 6. Exit chroot and unmount the OS disk copy from the troubleshooting VM, after you've done that, reassemble the original VM by switching the OS disk.
 
@@ -249,7 +255,7 @@ These labs simulate scenarios encountered regularly in Azure Linux support:
 
 - Compare the contents of a healthy initramfs with a corrupt one using `lsinitrd` to understand what modules and files are included.
 - Investigate what happens when you use `dracut --list-modules` to see all available dracut modules on the rescue VM.
-- Explore what other ALAR run-ids are available beyond `linux-alar-fki` and what scenarios they address.
+- Explore what other ALAR run-ids are available and what scenarios they address.
 - Attempt to recover Lab 1 using ALAR scripts instead of the manual chroot approach — compare the effort and reliability.
 - Investigate the difference between `add_drivers` and `force_drivers` in `/etc/dracut.conf` and when each should be used.
 - Review the cloud-init logs (`/var/log/cloud-init.log`, `/var/log/cloud-init-output.log`) on the rescue VM to understand how the original VM was provisioned.

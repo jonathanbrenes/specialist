@@ -48,7 +48,7 @@ At the end of this lab you will be able to:
 
 - Create sos or supportconfig reports
 - Enable specific modules
-- Cope with not enough space issues
+- Redirect report output when disk space is insufficient
 - Use Azure Serial Console and Boot Diagnostics to access and compare VM boot information
 
 ---

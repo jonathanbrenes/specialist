@@ -135,7 +135,7 @@ The disk we will modify following this example will be the disk named lun0. Use 
   mkdir <path_to_new_directory>    # Create an empty directory
   echo "<logical_volume_path>   <path_to_new_directory>   xfs defaults,nofail 0 0" >> /etc/fstab  # Add the entry in fstab file
   mount <path_to_new_directory>  # Mount the filesystem
-  df -Th | grep <name_of_new_directory>  # Verify
+  df -Th | grep <path_to_new_directory>  # Verify
   ```
 
 - Create one file of size 1GB and verify the md5sum and note it down to check later after resize of disk, change the names if needed:
@@ -180,7 +180,7 @@ The disk we will modify following this example will be the disk named lun0. Use 
   ```
 
 ### Scenario 2
-#### Extending a disk and resizing the LVM (In this case LVM is created on top of whole disk)
+#### Extending a disk and resizing the LVM (In this case LVM is created on a partition)
 
 - Create and attach a new empty disk of 4GB to the `storagelab01` VM. Use `LUN 1` for this.
 - Identify the disk from OS perspective:

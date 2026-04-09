@@ -173,7 +173,7 @@ Deployment: See the [Deployment](#deployment) section.
   ls -lR /dev/disk/azure
   ```
 
-  Look for the data disk that has no filesystem. Note its Azure persistent path under `/dev/disk/azure/scsi1/`.
+  Look for the data disks that have no filesystems. Note its Azure persistent path under `/dev/disk/azure/scsi1/`.
 
 - Create a Btrfs filesystem on the first data disk. Use a label to identify it:
 
@@ -184,7 +184,6 @@ Deployment: See the [Deployment](#deployment) section.
 - Verify the filesystem was created:
 
   ```bash
-  btrfs filesystem show
   lsblk -f
   ```
 
@@ -202,6 +201,7 @@ Deployment: See the [Deployment](#deployment) section.
   ```bash
   df -h /mnt/btrfsdata
   mount | grep btrfsdata
+  btrfs filesystem show /mnt/btrfsdata
   btrfs filesystem usage /mnt/btrfsdata
   ```
 

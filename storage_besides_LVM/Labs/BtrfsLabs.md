@@ -194,7 +194,7 @@ Deployment: See the [Deployment](#deployment) section.
   mount /dev/disk/azure/scsi1/lun0 /mnt/btrfsdata
   ```
 
-  > **Note:** This is a temporary mount used as a workspace to create subvolumes. It will not persist after a reboot. Persistent fstab entries for the individual subvolumes are added later in this lab.
+  > **Note:** This mount is used as a workspace to create and manage subvolumes. A persistent fstab entry for it is added later alongside the subvolume mounts. This is required to access snapshots after a reboot or unmount of the filesystem, as `btrfs subvolume list` only works on mounted paths.
 
 - Verify the mount:
 
@@ -258,9 +258,10 @@ Deployment: See the [Deployment](#deployment) section.
   md5sum /data/backups/testfile.dat
   ```
 
-- Add persistent fstab entries for the subvolumes. Use the UUID obtained earlier:
+- Add persistent fstab entries for the top-level filesystem and each subvolume. Use the UUID obtained earlier:
 
   ```bash
+  echo "UUID=<btrfs-uuid>  /mnt/btrfsdata btrfs  defaults,nofail              0 0" >> /etc/fstab
   echo "UUID=<btrfs-uuid>  /data/app      btrfs  defaults,nofail,subvol=appdata  0 0" >> /etc/fstab
   echo "UUID=<btrfs-uuid>  /data/logs     btrfs  defaults,nofail,subvol=logs     0 0" >> /etc/fstab
   echo "UUID=<btrfs-uuid>  /data/backups  btrfs  defaults,nofail,subvol=backups  0 0" >> /etc/fstab
@@ -275,7 +276,7 @@ Deployment: See the [Deployment](#deployment) section.
 - Test the fstab entries by unmounting and remounting:
 
   ```bash
-  umount /data/app /data/logs /data/backups
+  umount /data/app /data/logs /data/backups /mnt/btrfsdata
   mount -a
   df -h | grep data
   ```

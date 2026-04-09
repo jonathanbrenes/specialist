@@ -1,0 +1,176 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "azureuser"
+    },
+    "adminPassword": {
+      "type": "secureString"
+    }
+  },
+  "variables": {
+    "vnetName": "labVnet",
+    "subnetName": "default",
+    "nsgName": "labNsg",
+    "addressPrefix": "10.1.0.0/16",
+    "subnetPrefix": "10.1.0.0/24"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2024-05-01",
+      "name": "[variables('nsgName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "inbound_ssh_azurecloud",
+            "properties": {
+              "access": "Allow",
+              "protocol": "Tcp",
+              "direction": "Inbound",
+              "priority": 100,
+              "sourceAddressPrefix": "AzureCloud",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "22"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2024-05-01",
+      "name": "[variables('vnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2024-05-01",
+      "name": "[format('{0}/{1}', variables('vnetName'), variables('subnetName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+      ],
+      "properties": {
+        "addressPrefix": "[variables('subnetPrefix')]",
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2024-05-01",
+      "name": "service-lab2-nic1-pip",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "dnsSettings": {
+          "domainNameLabel": "[concat('service-lab2-nic1', uniqueString(resourceGroup().id))]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2024-05-01",
+      "name": "service-lab2-nic1",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', 'service-lab2-nic1-pip')]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]"
+      ],
+      "properties": {
+        "enableAcceleratedNetworking": false,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('subnetName'))]"
+              },
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "10.1.0.10",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'service-lab2-nic1-pip')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2023-03-01",
+      "name": "service-lab2",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', 'service-lab2-nic1')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "SUSE",
+            "offer": "sles-15-sp7-basic",
+            "sku": "gen2",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "StandardSSD_LRS"
+            }
+          },
+          "dataDisks": [],
+          "diskControllerType": "SCSI"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'service-lab2-nic1')]",
+              "properties": {
+                "primary": true
+              }
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "service-lab2",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "customData": "H4sIAAAAAAAACp1RTUvDQBA9u7/iGbVpqSY7ye7m0A9QbFFQC62eSxJTGmybkqytoP53SXZRUPHgYZkZZt57s2+ODv0k3/hJXC1ZGmv0++759HZ+8XB9czmazq8ms/vZfDQZuxgO4Wc69ZdFpStG3COPe8QPqqzc5Wl2toqTgP2KZcxSYzQZNzy7uPT1eus/xjr29ItmXITggsBlBBIBSBJIqq9aEEiFIMnBKTC5kCAhwAUHl7LBNLmIDI6E4alnlTDzUoECW6vActRa0mBUaGJYa9cvAK81/sMXGc5mn2bHCCQthwg+9Sj6zmn/9Uff+CKMN0ravZX1qO7V0XqkBGuuEO+f4L5iUZTtfEC9vD+4G/fybreDbZlv9ALOSeqcotKlLjbP67bDneO8g3f358HwhmrJWLXKsi0UR6uFMkuKQqP1AVP2l2lSAgAA"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "vmFqdns": {
+      "type": "array",
+      "value": [
+        "[reference(resourceId('Microsoft.Network/publicIPAddresses', 'service-lab2-nic1-pip')).dnsSettings.fqdn]"
+      ]
+    }
+  }
+}

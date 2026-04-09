@@ -37,6 +37,19 @@
               "destinationAddressPrefix": "*",
               "destinationPortRange": "22"
             }
+          },
+          {
+            "name": "inbound_custom_1_tcp_8080",
+            "properties": {
+              "access": "Allow",
+              "protocol": "Tcp",
+              "direction": "Inbound",
+              "priority": 200,
+              "sourceAddressPrefix": "AzureCloud",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "8080"
+            }
           }
         ]
       }
@@ -155,7 +168,7 @@
           "computerName": "service-lab2",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]",
-          "customData": "H4sIAAAAAAAACp1RTUvDQBA9u7/iGbVpqSY7ye7m0A9QbFFQC62eSxJTGmybkqytoP53SXZRUPHgYZkZZt57s2+ODv0k3/hJXC1ZGmv0++759HZ+8XB9czmazq8ms/vZfDQZuxgO4Wc69ZdFpStG3COPe8QPqqzc5Wl2toqTgP2KZcxSYzQZNzy7uPT1eus/xjr29ItmXITggsBlBBIBSBJIqq9aEEiFIMnBKTC5kCAhwAUHl7LBNLmIDI6E4alnlTDzUoECW6vActRa0mBUaGJYa9cvAK81/sMXGc5mn2bHCCQthwg+9Sj6zmn/9Uff+CKMN0ravZX1qO7V0XqkBGuuEO+f4L5iUZTtfEC9vD+4G/fybreDbZlv9ALOSeqcotKlLjbP67bDneO8g3f358HwhmrJWLXKsi0UR6uFMkuKQqP1AVP2l2lSAgAA"
+          "customData": "H4sIAAAAAAAAClNW1E/KzNNPSizO4EpOLFGwsVF3DPKNdwr19HFxDYr38A8OCY539XdTV7CzU9BPLUnWz8gvLinmMjTQM9Qz0DM04CxOLSrLTE7VzUlMMuLCqhcAT3ixKGQAAAA="
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {

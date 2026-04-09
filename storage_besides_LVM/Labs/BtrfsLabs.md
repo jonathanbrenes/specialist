@@ -195,6 +195,8 @@ Deployment: See the [Deployment](#deployment) section.
   mount /dev/disk/azure/scsi1/lun0 /mnt/btrfsdata
   ```
 
+  > **Note:** This is a temporary mount used as a workspace to create subvolumes. It will not persist after a reboot. Persistent fstab entries for the individual subvolumes are added later in this lab.
+
 - Verify the mount:
 
   ```bash

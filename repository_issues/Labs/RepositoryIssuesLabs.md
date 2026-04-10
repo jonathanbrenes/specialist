@@ -188,11 +188,14 @@ Key diagnostic commands to consider:
 
 ```bash
 rpm -qa | grep -i rhui
-openssl x509 -in /etc/pki/rhui/product/content.crt -noout -text | grep -E 'Not Before|Not After'
+ls /etc/pki/rhui/product/
+openssl x509 -in /etc/pki/rhui/product/*.crt -noout -text | grep -E 'Not Before|Not After'
 cat /etc/redhat-release
 cat /etc/yum/vars/releasever
 yum repolist
 ```
+
+> **Note:** The RHUI certificate filename varies depending on the installed RHUI client package. For example, it may be `content.crt` or `content-rhel8-eus.crt`. Always list the directory first with `ls /etc/pki/rhui/product/` to identify the correct file.
 
 Consider the order of operations carefully. If the certificate is expired, most `yum` operations against RHUI repositories will fail. You may need to find a way to update the RHUI package itself before changing the repository configuration.
 
